@@ -1,0 +1,89 @@
+﻿@model authcontroller.Areas.Admin.ViewModels.PostsForm
+
+
+<h1>@(Model.isNew?"Create Post":"Update Post")</h1>
+
+@using (Html.BeginForm("Form","Posts"))
+{
+    if (!Model.isNew)
+    {
+        @Html.HiddenFor(f=>f.postId)
+    }
+    
+    @Html.AntiForgeryToken()
+    
+    
+    
+    <div class="row">
+        <div class="col-lg-8">
+            @Html.ValidationSummary()        
+            <div class="form-group">
+                @Html.LabelFor(f=>f.Title)
+                @Html.TextBoxFor(f => f.Title, new {@class="form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(f=>f.Slug)
+                @Html.TextBoxFor(f => f.Slug, new {@class="form-control",data_slug="#Title" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(f=>f.Content)
+                @Html.TextAreaFor(f => f.Content, new {@class="form-control" })
+            </div>
+
+        </div>
+        <div class="col-lg-2">
+          
+            <div class="panel panel-info">
+              <div class="panel panel-heading">Posts Actions</div>
+              <div class="panel panel-body">
+                    <input type="submit" value="@(Model.isNew?"Publish Post":"Update Post")" class="btn btn-success btn-sm" />
+                     <a href="@Url.Action("index")"> or cancel </a>
+              </div>
+            </div>  
+            <div class="panel panel-info">
+                <div class="panel panel-heading">Tags</div>
+                <div class="panel panel-body post-tag-editor">
+                    <label for="new-tag-name">New Tag : </label>
+                    <div class="input-group">
+                            <input id="new-tag-name" type="text" class="form-control new-tag-name" />
+                            <span class="input-group-btn">
+                                <button disabled class="btn btn-primary add-tag-button">Add</button>
+                            </span>
+                    </div>
+                    <ul class="tag-select">
+                        <li class="template">
+                             <a href="#" class="name"></a>
+                           
+                            <input type="hidden" class="name-input" />
+                            <input type="hidden" class="selected-input" />
+                        </li>
+                    @for (var i = 0; i < Model.Tags.Count;i++ )
+                    {
+                        var tag = Model.Tags[i];
+                        
+                        <li data-tag-id="@tag.Id" class="@(tag.isChecked? "selected" :"" )">
+                                
+                       
+                            <a href="#">@tag.Name</a>
+                        
+                            <input type="hidden" name="Tags[@(i)].id" value="@tag.Id" />
+                            <input type="hidden" name="Tags[@(i)].Name" value="@tag.Name" />
+                            <input type="hidden" name="Tags[@(i)].isChecked" value="@tag.isChecked.ToString()" class="selected-input" />
+                        </li>
+                        
+                             
+                    }
+
+                    </ul>
+                    
+              </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/content/Scripts/TagEditor.js"></script>
+    <script src="~/content/Scripts/ckeditor/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace("Content");
+
+    </script>
+}

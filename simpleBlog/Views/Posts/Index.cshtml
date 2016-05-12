@@ -1,0 +1,10 @@
+﻿@model authcontroller.ViewModels.PostsIndex
+
+
+@{
+    ViewBag.Title = "Home Page";
+   
+}
+
+@Html.Partial("_PostsPartial", Model.Posts)
+

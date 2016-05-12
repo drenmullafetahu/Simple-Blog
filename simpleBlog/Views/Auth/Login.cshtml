@@ -1,0 +1,32 @@
+﻿@model authcontroller.ViewModels.AuthLogin
+@{
+    ViewBag.Title = "Login Page";
+}
+
+<h1>Login</h1>
+
+<p>The value of test is in our model : @Model.Test</p>
+
+
+
+
+
+@using (@Html.BeginForm())
+{
+    
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    <div>
+        @Html.LabelFor(x=>x.UserName)
+        @Html.EditorFor(x=>x.UserName)
+    </div>   
+    
+    <div>
+        @Html.LabelFor(x=>x.Password)
+        @Html.EditorFor(x=>x.Password)
+    </div>   
+    <div>
+        <input type="submit" value="Login" />
+    </div>
+}
+

@@ -1,0 +1,20 @@
+﻿@model   IList<authcontroller.Areas.Admin.ViewModels.RoleCheckBox>
+
+<div class="panel panel-default">
+        <div class="panel-heading">Roles</div>
+        <div class="panel-body">
+            <ul class="list-group">
+            
+             @for (int i = 0; i < Model.Count;i++)
+             {
+                 <li class="list-group-item">
+                     @Html.Hidden("Roles[" + i + "].id", Model[i].Id)
+                    <label for="Roles_@(i)__IsCheked">
+                        @Html.CheckBox("Roles[" + i + "].isChecked",Model[i].isChecked)
+                        @Model[i].Name
+                    </label>
+                </li>
+             }  
+            </ul>
+        </div>
+    </div>

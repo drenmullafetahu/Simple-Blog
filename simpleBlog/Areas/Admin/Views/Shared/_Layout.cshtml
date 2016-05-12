@@ -1,0 +1,37 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+@helper SelectedTab(string value){
+    if (value==ViewBag.SelectedTab){
+        @: active
+    }
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Simple Blog Admin Panel</title>
+    @Styles.Render("~/admin/styles")
+    @Scripts.Render("~/admin/javascript")
+</head>
+<body>
+  
+    <div class="container">
+        <ul class="nav nav-pills">
+         
+            <li class="@SelectedTab("posts")"><a href="@Url.Action("index", "posts", new { area="admin"})"><span class="glyphicon glyphicon-user"></span> Posts </a></li>
+            <li  class="@(SelectedTab("users"))"><a href="@Url.Action("index", "users", new { area="admin"})"><span class="glyphicon glyphicon-th-list"></span> Users </a></li>
+
+            <li class="pull-right">@Html.RouteLink("Back to home page","home")</li>
+        </ul>
+    </div>
+    @RenderBody()
+
+    <form class="hidden" id="anti-forgery-form">
+        @Html.AntiForgeryToken()
+    </form>
+</body>
+</html>
